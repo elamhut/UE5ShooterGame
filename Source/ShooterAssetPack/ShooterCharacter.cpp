@@ -3,12 +3,20 @@
 
 #include "ShooterCharacter.h"
 
+#include "GameFramework/SpringArmComponent.h"
+
 // Sets default values
 AShooterCharacter::AShooterCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm Component"));
+	SpringArmComponent->SetupAttachment(RootComponent);
+	SpringArmComponent->bUsePawnControlRotation = true;
+
+	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera Component"));
+	CameraComponent->SetupAttachment(SpringArmComponent);
 }
 
 // Called when the game starts or when spawned
@@ -32,3 +40,20 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 }
 
+void AShooterCharacter::DoMove(const FVector2D& MovementVector)
+{
+	AddMovementInput(GetActorForwardVector() * MovementVector.X);
+	AddMovementInput(GetActorRightVector() * MovementVector.Y);
+}
+
+void AShooterCharacter::DoLook(const FVector2D& LookVector)
+{
+	const float DeltaTime = GetWorld()->GetDeltaSeconds();
+	AddControllerYawInput(LookVector.X);
+	AddControllerPitchInput(LookVector.Y);
+}
+
+void AShooterCharacter::DoJump()
+{
+	Jump();
+}
