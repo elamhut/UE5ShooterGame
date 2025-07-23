@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "ShooterCharacter.generated.h"
 
+class AGun;
 class USpringArmComponent;
 
 UCLASS()
@@ -31,15 +32,33 @@ public:
 	void DoMove(const FVector2D& MovementVector);
 	void DoLook(const FVector2D& LookVector);
 	void DoJump();
-	
+	void DoShoot();
+
+	UFUNCTION(BlueprintPure)
+	bool IsDead() const;
+
+	virtual float TakeDamage(float Damage, const FDamageEvent& DamageEvent, AController* EventInstigator,
+		AActor* DamageCauser) override;
+
 private:
 	UPROPERTY(EditAnywhere)
 	float MovementSpeed{100.f};
+
+	UPROPERTY(EditDefaultsOnly)
+	float MaxHealth{100.f};
+
+	UPROPERTY(VisibleAnywhere)
+	float Health{0};
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<USpringArmComponent> SpringArmComponent;
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UCameraComponent> CameraComponent;
-	
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AGun> GunClass;
+
+	UPROPERTY()
+	TObjectPtr<AGun> Gun;
 };

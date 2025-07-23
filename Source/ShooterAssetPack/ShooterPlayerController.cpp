@@ -44,6 +44,11 @@ void AShooterPlayerController::BeginPlay()
 	                                   ETriggerEvent::Started,
 	                                   this,
 	                                   &AShooterPlayerController::HandleJump);
+
+	EnhancedInputComponent->BindAction(ShootAction,
+								   ETriggerEvent::Started,
+								   this,
+								   &AShooterPlayerController::HandleShoot);
 }
 
 void AShooterPlayerController::HandleMove(const FInputActionValue& InputActionValue)
@@ -61,4 +66,9 @@ void AShooterPlayerController::HandleLook(const FInputActionValue& InputActionVa
 void AShooterPlayerController::HandleJump()
 {
 	PlayerPawn->DoJump();
+}
+
+void AShooterPlayerController::HandleShoot()
+{
+	PlayerPawn->DoShoot();
 }

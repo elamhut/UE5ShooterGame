@@ -25,6 +25,7 @@ protected:
 	void HandleMove(const FInputActionValue& InputActionValue);
 	void HandleLook(const FInputActionValue& InputActionValue);
 	void HandleJump();
+	void HandleShoot();
 
 private:
 	UPROPERTY(EditDefaultsOnly)
@@ -42,6 +43,9 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UInputAction> JumpAction;
 
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UInputAction> ShootAction;
+	
 	UPROPERTY()
 	TObjectPtr<AShooterCharacter> PlayerPawn;
 	
