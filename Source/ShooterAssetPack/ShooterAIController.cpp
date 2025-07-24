@@ -3,6 +3,7 @@
 
 #include "ShooterAIController.h"
 
+#include "BehaviorTree/BlackboardComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -17,16 +18,20 @@ AShooterAIController::AShooterAIController()
 void AShooterAIController::BeginPlay()
 {
 	Super::BeginPlay();
-	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-	SetFocus(PlayerPawn);
+
+	if (EnemyBehaviorTree)
+	{
+		RunBehaviorTree(EnemyBehaviorTree);
+
+		APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+		APawn* ControlledPawn = GetPawn();
+		GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), PlayerPawn->GetActorLocation());
+		GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"), ControlledPawn->GetActorLocation());
+	}
 }
 
 // Called every frame
 void AShooterAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
-	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-	MoveToActor(PlayerPawn, 100);
 }
-

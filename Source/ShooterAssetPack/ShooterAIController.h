@@ -22,4 +22,11 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+private:
+	UPROPERTY(EditAnywhere)
+	float AcceptanceRadius;
+
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UBehaviorTree> EnemyBehaviorTree;
 };

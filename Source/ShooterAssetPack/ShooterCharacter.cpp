@@ -4,6 +4,7 @@
 #include "ShooterCharacter.h"
 
 #include "Gun.h"
+#include "Components/CapsuleComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
 // Sets default values
@@ -86,8 +87,13 @@ float AShooterCharacter::TakeDamage(float Damage, const FDamageEvent& DamageEven
 	
 	DamageToApply = FMath::Min(Health, DamageToApply);
     Health -= DamageToApply;
-    
-	UE_LOG(LogTemp, Log, TEXT("Current Health %f"), Health);
+    UE_LOG(LogTemp, Log, TEXT("Current Health %f"), Health);
+
+	if (IsDead())
+	{
+		DetachFromControllerPendingDestroy();
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
 	
 	return DamageToApply;
 }
