@@ -39,6 +39,12 @@ private:
 	TObjectPtr<UParticleSystem> ImpactEffect;
 
 	UPROPERTY(EditAnywhere)
+	TObjectPtr<USoundBase> MuzzleSound;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<USoundBase> ImpactSound;
+
+	UPROPERTY(EditAnywhere)
 	float MaxRange{1000.f};
 
 	UPROPERTY(EditAnywhere)
