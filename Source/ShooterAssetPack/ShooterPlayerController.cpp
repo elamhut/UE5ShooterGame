@@ -7,10 +7,31 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputMappingContext.h"
 #include "ShooterCharacter.h"
+#include "Blueprint/UserWidget.h"
 
 AShooterPlayerController::AShooterPlayerController()
 {
 	InputMappingContext = CreateDefaultSubobject<UInputMappingContext>("Input Mapping");
+}
+
+void AShooterPlayerController::GameHasEnded(AActor* EndGameFocus, bool bIsWinner)
+{
+	Super::GameHasEnded(EndGameFocus, bIsWinner);
+
+	if (bIsWinner)
+	{
+		UUserWidget* WinScreen = CreateWidget(this, WinScreenClass);
+		if (WinScreen)
+			WinScreen->AddToViewport();
+	}
+	else
+	{
+		UUserWidget* LoseScreen = CreateWidget(this, LosesScreenClass);
+		if (LoseScreen)
+			LoseScreen->AddToViewport();
+	}
+
+	GetWorldTimerManager().SetTimer(RespawnTimerHandle, this, &APlayerController::RestartLevel, RespawnTime);
 }
 
 void AShooterPlayerController::BeginPlay()

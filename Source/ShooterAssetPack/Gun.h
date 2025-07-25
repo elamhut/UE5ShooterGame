@@ -16,14 +16,16 @@ public:
 	AGun();
 
 	virtual void Tick(float DeltaTime) override;
+	AController* GetOwnerController() const;
 	void PullTrigger();
-
 	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 private:
+	bool GunTrace(FHitResult& HitResult, FVector& ShotDirection);
+	
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USceneComponent> RootSceneComponent;
 	

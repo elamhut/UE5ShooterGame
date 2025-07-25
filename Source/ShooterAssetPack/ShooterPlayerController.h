@@ -18,8 +18,10 @@ class SHOOTERASSETPACK_API AShooterPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
+public:
 	AShooterPlayerController();
-	
+	virtual void GameHasEnded(AActor* EndGameFocus = nullptr, bool bIsWinner = false) override;
+
 protected:
 	virtual void BeginPlay() override;
 	void HandleMove(const FInputActionValue& InputActionValue);
@@ -48,5 +50,15 @@ private:
 	
 	UPROPERTY()
 	TObjectPtr<AShooterCharacter> PlayerPawn;
-	
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UUserWidget> LosesScreenClass;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UUserWidget> WinScreenClass;
+
+	UPROPERTY(EditAnywhere)
+	float RespawnTime{5.f};
+
+	FTimerHandle RespawnTimerHandle;	
 };

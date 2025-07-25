@@ -16,7 +16,8 @@ public class ShooterAssetPack : ModuleRules
 				"InputCore",
 				"EnhancedInput",
 				"AIModule",
-				"GameplayTasks"
+				"GameplayTasks",
+				"UMG"
 			}
 		);
 

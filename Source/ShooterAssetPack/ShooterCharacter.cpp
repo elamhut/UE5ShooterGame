@@ -4,6 +4,7 @@
 #include "ShooterCharacter.h"
 
 #include "Gun.h"
+#include "ShooterGameMode.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
@@ -56,7 +57,6 @@ void AShooterCharacter::DoMove(const FVector2D& MovementVector)
 
 void AShooterCharacter::DoLook(const FVector2D& LookVector)
 {
-	const float DeltaTime = GetWorld()->GetDeltaSeconds();
 	AddControllerYawInput(LookVector.X);
 	AddControllerPitchInput(LookVector.Y);
 }
@@ -91,8 +91,11 @@ float AShooterCharacter::TakeDamage(float Damage, const FDamageEvent& DamageEven
 
 	if (IsDead())
 	{
-		DetachFromControllerPendingDestroy();
+		if (AShooterGameMode* GameMode = GetWorld()->GetAuthGameMode<AShooterGameMode>())
+			GameMode->PawnKilled(this);
+		
 		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		DetachFromControllerPendingDestroy();
 	}
 	
 	return DamageToApply;
