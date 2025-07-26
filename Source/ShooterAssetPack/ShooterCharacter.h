@@ -23,7 +23,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -35,10 +35,13 @@ public:
 	void DoShoot();
 
 	UFUNCTION(BlueprintPure)
-	bool IsDead() const;
+	bool IsDead() const { return Health <= 0; }
+
+	UFUNCTION(BlueprintPure)
+	float GetHealthPercent() const { return Health / MaxHealth; };
 
 	virtual float TakeDamage(float Damage, const FDamageEvent& DamageEvent, AController* EventInstigator,
-		AActor* DamageCauser) override;
+	                         AActor* DamageCauser) override;
 
 private:
 	UPROPERTY(EditAnywhere)

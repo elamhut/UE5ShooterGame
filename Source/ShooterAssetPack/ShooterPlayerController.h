@@ -57,6 +57,12 @@ private:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UUserWidget> WinScreenClass;
 
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UUserWidget> HUDClass;
+
+	UPROPERTY()
+	TObjectPtr<UUserWidget> HUD;
+	
 	UPROPERTY(EditAnywhere)
 	float RespawnTime{5.f};
 

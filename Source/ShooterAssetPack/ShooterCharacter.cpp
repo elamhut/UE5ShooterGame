@@ -72,14 +72,6 @@ void AShooterCharacter::DoShoot()
 		Gun->PullTrigger();
 }
 
-bool AShooterCharacter::IsDead() const
-{
-	if (Health == 0)
-		return true;
-
-	return false;
-}
-
 float AShooterCharacter::TakeDamage(float Damage, const FDamageEvent& DamageEvent, AController* EventInstigator,
                                     AActor* DamageCauser)
 {

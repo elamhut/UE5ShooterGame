@@ -31,6 +31,7 @@ void AShooterPlayerController::GameHasEnded(AActor* EndGameFocus, bool bIsWinner
 			LoseScreen->AddToViewport();
 	}
 
+	HUD->RemoveFromParent();
 	GetWorldTimerManager().SetTimer(RespawnTimerHandle, this, &APlayerController::RestartLevel, RespawnTime);
 }
 
@@ -70,6 +71,9 @@ void AShooterPlayerController::BeginPlay()
 								   ETriggerEvent::Started,
 								   this,
 								   &AShooterPlayerController::HandleShoot);
+
+	HUD = CreateWidget(this, HUDClass);
+	HUD->AddToViewport();
 }
 
 void AShooterPlayerController::HandleMove(const FInputActionValue& InputActionValue)
